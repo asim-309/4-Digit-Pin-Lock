@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="alpha.lockpin.MainActivity">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/currentPin"
+        android:textSize="20dp"
+        android:layout_margin="20dp"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Pin"
+        android:layout_gravity="center"
+        android:id="@+id/create"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Pin"
+        android:layout_gravity="center"
+        android:id="@+id/change"
+        android:visibility="gone"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove Pin"
+        android:layout_gravity="center"
+        android:id="@+id/remove"
+        android:visibility="gone"
+        />
+    <EditText
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/pin"
+        android:maxLength="4"
+        android:visibility="gone"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Pin"
+        android:layout_gravity="center"
+        android:id="@+id/set"
+        android:visibility="gone"
+        />
+</LinearLayout>
+
+
+</RelativeLayout>
