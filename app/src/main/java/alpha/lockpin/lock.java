@@ -113,12 +113,8 @@ public class lock extends Activity {
                     e.printStackTrace();
                 }
                 if (initCipher()) {
-                    //If the cipher is initialized successfully, then create a CryptoObject instance//
                     cryptoObject = new FingerprintManager.CryptoObject(cipher);
-
-                    // Here, I’m referencing the FingerprintHandler class that we’ll create in the next section. This class will be responsible
-                    // for starting the authentication process (via the startAuth method) and processing the authentication process events//
-                    FingerprintHandler helper = new FingerprintHandler(this,fingerprint);
+                    FingerprintHandler helper = new FingerprintHandler(this);
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }
             }
