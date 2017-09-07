@@ -42,7 +42,7 @@ public class lock extends Activity {
 
     Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9;
     SharedPreferences sharedpreferences;
-    ImageView img1,img2,img3,img4,erase;
+    ImageView img1,img2,img3,img4,erase,fingerprint;
     String pin = "";
 
     private static final String KEY_NAME = "yourKey";
@@ -74,6 +74,7 @@ public class lock extends Activity {
         img2 = (ImageView)findViewById(R.id.img2);
         img3 = (ImageView)findViewById(R.id.img3);
         img4 = (ImageView)findViewById(R.id.img4);
+        fingerprint = (ImageView)findViewById(R.id.fingerprint);
 
 
 
@@ -117,7 +118,7 @@ public class lock extends Activity {
 
                     // Here, I’m referencing the FingerprintHandler class that we’ll create in the next section. This class will be responsible
                     // for starting the authentication process (via the startAuth method) and processing the authentication process events//
-                    FingerprintHandler helper = new FingerprintHandler(this);
+                    FingerprintHandler helper = new FingerprintHandler(this,fingerprint);
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }
             }
