@@ -128,10 +128,6 @@ public class lock extends Activity {
             fingerprint.setVisibility(View.INVISIBLE);
         }
 
-
-
-
-
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
