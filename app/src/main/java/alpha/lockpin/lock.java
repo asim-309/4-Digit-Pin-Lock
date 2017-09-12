@@ -126,7 +126,7 @@ public class lock extends Activity {
         }
 
         else{
-            fingerprint.setVisibility(View.GONE);
+            fingerprint.setVisibility(View.INVISIBLE);
         }
 
         btn0.setOnClickListener(new View.OnClickListener() {
