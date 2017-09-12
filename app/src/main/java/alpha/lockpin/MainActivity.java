@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button create,change,set,remove;
+    Button create,change,set,remove,enableFingerprint,disableFingerprint;
     EditText pin;
     TextView currentPin;
 
@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         set = (Button)findViewById(R.id.set);
         pin = (EditText)findViewById(R.id.pin);
         currentPin = (TextView)findViewById(R.id.currentPin);
+        enableFingerprint = (Button)findViewById(R.id.enableFingerprint);
+        disableFingerprint =(Button)findViewById(R.id.diableFingerprint);
 
         sharedpreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
 
@@ -47,7 +49,32 @@ public class MainActivity extends AppCompatActivity {
             remove.setVisibility(View.GONE);
         }
 
+        if(getFingerprintState()==1){
+            enableFingerprint.setVisibility(View.GONE);
+            disableFingerprint.setVisibility(View.VISIBLE);
+        }
+        else{
+            enableFingerprint.setVisibility(View.VISIBLE);
+            disableFingerprint.setVisibility(View.GONE);
+        }
 
+        enableFingerprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setFingerprintState(1);
+                enableFingerprint.setVisibility(View.GONE);
+                disableFingerprint.setVisibility(View.VISIBLE);
+            }
+        });
+
+        disableFingerprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setFingerprintState(0);
+                enableFingerprint.setVisibility(View.VISIBLE);
+                disableFingerprint.setVisibility(View.GONE);
+            }
+        });
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +144,20 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e){
             return "";
+        }
+    }
+
+    public void setFingerprintState(int dec){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt("fingerprint",dec);
+        editor.commit();
+    }
+    public int getFingerprintState(){
+        try{
+            return sharedpreferences.getInt("fingerprint",0);
+        }
+        catch (Exception e){
+            return 0;
         }
     }
 }

@@ -58,6 +58,21 @@
         android:id="@+id/set"
         android:visibility="gone"
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Fingerprint"
+        android:layout_gravity="center"
+        android:id="@+id/enableFingerprint"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diable Fingerprint"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/diableFingerprint"
+        />
 </LinearLayout>
 
 

@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.sax.StartElementListener;
+import android.os.Handler;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
@@ -17,9 +17,11 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -79,6 +81,7 @@ public class lock extends Activity {
 
 
         sharedpreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+
         if(getPin().length() == 0){
             Intent i = new Intent(lock.this,MainActivity.class);
             startActivity(i);
@@ -86,6 +89,7 @@ public class lock extends Activity {
         }
         Toast.makeText(getApplicationContext(),getPin(),Toast.LENGTH_SHORT).show();
 
+        if(getFingerprintState()==1){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             keyguardManager =
                     (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
@@ -108,8 +112,7 @@ public class lock extends Activity {
             } else {
                 try {
                     generateKey();
-                }
-                catch (FingerprintException  e){
+                } catch (FingerprintException e) {
                     e.printStackTrace();
                 }
                 if (initCipher()) {
@@ -118,7 +121,11 @@ public class lock extends Activity {
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }
             }
+        }
 
+        }
+        else{
+            fingerprint.setVisibility(View.INVISIBLE);
         }
 
 
@@ -287,6 +294,24 @@ public class lock extends Activity {
         pin = pin+input;
     }
 
+    public void errorSetImage(){
+        img1.setImageResource(R.drawable.circle_red);
+        img2.setImageResource(R.drawable.circle_red);
+        img3.setImageResource(R.drawable.circle_red);
+        img4.setImageResource(R.drawable.circle_red);
+        Animation vibrate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.vibrate);
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.imgLayout);
+        linearLayout.clearAnimation();
+        linearLayout.setAnimation(vibrate);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setImage();
+            }
+        }, 1000);
+    }
+
     public void check(int lastDigit){
         entry(String.valueOf(lastDigit));
         setImage();
@@ -297,8 +322,8 @@ public class lock extends Activity {
         }
         else{
             pin = "";
-            setImage();
-            Toast.makeText(getApplicationContext(), "Wrong PIN", Toast.LENGTH_SHORT).show();
+            errorSetImage();
+            //Toast.makeText(getApplicationContext(), "Wrong PIN", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -396,6 +421,13 @@ public class lock extends Activity {
             super(e);
         }
     }
-
+    public int getFingerprintState(){
+        try{
+            return sharedpreferences.getInt("fingerprint",0);
+        }
+        catch (Exception e){
+            return 0;
+        }
+    }
 
 }

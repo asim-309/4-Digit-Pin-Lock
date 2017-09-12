@@ -13,6 +13,7 @@ package alpha.lockpin;
         import android.Manifest;
         import android.os.Build;
         import android.os.CancellationSignal;
+        import android.os.Handler;
         import android.support.v4.app.ActivityCompat;
         import android.view.animation.Animation;
         import android.view.animation.AnimationUtils;
@@ -50,12 +51,20 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        Toast.makeText(context, "Authentication failed", Toast.LENGTH_SHORT).show();
-        ImageView fingerprint = (ImageView) ((Activity)context).findViewById(R.id.fingerprint);
+        //Toast.makeText(context, "Authentication failed", Toast.LENGTH_SHORT).show();
+        final ImageView fingerprint = (ImageView) ((Activity)context).findViewById(R.id.fingerprint);
         fingerprint.setImageResource(R.drawable.ic_fingerprint_red_24dp);
         fingerprint.clearAnimation();
         Animation vibrate = AnimationUtils.loadAnimation(context, R.anim.vibrate);
         fingerprint.setAnimation(vibrate);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fingerprint.setImageResource(R.drawable.ic_fingerprint_black_24dp);
+            }
+        }, 1000);
+
     }
 
     @Override
